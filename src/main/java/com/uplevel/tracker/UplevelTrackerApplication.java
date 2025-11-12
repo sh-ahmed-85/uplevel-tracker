@@ -1,4 +1,4 @@
-package com.uplevel.tracker.uplevel_tracker;
+package com.uplevel.tracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

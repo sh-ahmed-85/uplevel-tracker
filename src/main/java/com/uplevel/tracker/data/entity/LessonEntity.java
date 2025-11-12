@@ -1,6 +1,6 @@
-package com.uplevel.tracker.uplevel_tracker.data.entity;
+package com.uplevel.tracker.data.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,9 +13,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "modules")
+@Table(name = "lessons")
 @Data
-public class Module {
+public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,20 +24,23 @@ public class Module {
 
     @Column(name = "title")
     private String title;
-
-    @Column(name = "course_id")
-    private Long courseId;
     
+    @Column(name = "url")
+    private String url;
+
     @Column(name = "order_index")
     private Integer orderIndex;
+    
+    @Column(name = "duration_minutes")
+    private Integer durationMinutes;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "module_id")
+    private Module module;
 }

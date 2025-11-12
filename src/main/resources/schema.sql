@@ -1,85 +1,78 @@
 
 CREATE TABLE users(
-    username varchar_ignorecase(50) primary key,
-    password varchar_ignorecase(500) not null,
-    enabled boolean not null
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(500) NOT NULL,
+    enabled BOOLEAN NOT NULL
 );
 
 CREATE TABLE authorities(
-    username varchar_ignorecase(50) not null,
-    authority varchar_ignorecase(50) not null,
-    foreign key (username) references users(username)
+    user_id INT NOT NULL,
+    authority VARCHAR(50) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE UNIQUE INDEX idx_auth_username on authorities(username, authority);
+CREATE UNIQUE INDEX idx_auth_user_id on authorities(user_id, authority);
 
 CREATE TABLE courses(
-    id int primary key,
-    title varchar_ignorecase(255) not null,
-    description text not null,
-    difficulty varchar_ignorecase(50) not null,
-    total_hours int not null,
-    tags varchar_ignorecase(255) not null,
-    created_by varchar_ignorecase(50) not null,
-    created_at timestamp not null,
-    updated_at timestamp not null,
-    foreign key (created_by) references users(username)
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    difficulty VARCHAR(50) NOT NULL,
+    total_hours INT NOT NULL,
+    tags VARCHAR(255) NOT NULL,
+    created_by INT NOT NULL REFERENCES users(id),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 );
 
 CREATE TABLE modules(
-    id int primary key,
-    title varchar_ignorecase(255) not null,
-    course_id int not null,
-    order_index int not null,
-    created_at timestamp not null,
-    updated_at timestamp not null,
-    foreign key (course_id) references courses(id)
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) not null,
+    course_id INT NOT NULL REFERENCES courses(id),
+    order_index INT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 );
 
 CREATE TABLE lessons(
-    id int primary key,
-    title varchar_ignorecase(255) not null,
-    url varchar_ignorecase(255) null,
-    module_id int not null,
-    order_index int not null,
-    duration_minutes int not null,
-    created_at timestamp not null,
-    updated_at timestamp not null,
-    foreign key (module_id) references modules(id)
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) not null,
+    url VARCHAR(255) null,
+    module_id INT NOT NULL REFERENCES modules(id),
+    order_index INT NOT NULL,
+    duration_minutes INT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 );
 
 CREATE TABLE enrollments(
-    id int primary key,
-    user_id int not null,
-    course_id int not null,
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users(id),
+    course_id INT NOT NULL REFERENCES courses(id),
     -- status[PLANNED|ACTIVE|PAUSED|COMPLETED]
-    status varchar_ignorecase(50) not null,
-    progress_percentage float not null,
-    target_date timestamp not null,
-    start_date timestamp not null,
-    end_date timestamp not null,
-    created_at timestamp not null,
-    updated_at timestamp not null,
-    foreign key (user_id) references users(username),
-    foreign key (course_id) references courses(id)
+    status VARCHAR(50) NOT NULL,
+    progress_percentage FLOAT NOT NULL,
+    target_date TIMESTAMP NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 );
 
 CREATE TABLE lesson_progress(
-    id int primary key,
-    lesson_id int not null,
-    enrollment_id int not null,
-    completed_at timestamp null,
-    foreign key (lesson_id) references lessons(id),
-    foreign key (enrollment_id) references enrollments(id)
+    id SERIAL PRIMARY KEY,
+    lesson_id INT NOT NULL REFERENCES lessons(id),
+    enrollment_id INT NOT NULL REFERENCES enrollments(id),
+    completed_at TIMESTAMP NULL,
+    UNIQUE (lesson_id, enrollment_id)
 );
 
 CREATE TABLE notes(
-    id int primary key,
-    lesson_id int not null,
-    user_id int not null,
-    note text not null,
-    created_at timestamp not null,
-    updated_at timestamp not null,
-    foreign key (lesson_id) references lessons(id),
-    foreign key (user_id) references users(username)
+    id SERIAL PRIMARY KEY,
+    lesson_id int not null REFERENCES lessons(id),
+    user_id INT NOT NULL REFERENCES users(id),
+    note TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 );

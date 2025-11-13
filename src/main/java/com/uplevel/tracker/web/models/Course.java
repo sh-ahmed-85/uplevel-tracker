@@ -23,7 +23,7 @@ public class Course {
     public String difficulty;
     public Integer totalHours;
     public List<String> tags;
-    public String createdBy;
+    public User createdBy;
     public LocalDateTime createdAt;
     public LocalDateTime updatedAt;
 

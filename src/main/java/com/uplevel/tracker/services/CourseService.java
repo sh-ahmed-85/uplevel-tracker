@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.uplevel.tracker.data.entity.CourseEntity;
+import com.uplevel.tracker.data.entity.UserEntity;
 import com.uplevel.tracker.web.models.Course;
 import com.uplevel.tracker.web.models.Module;
+import com.uplevel.tracker.web.models.User;
 import com.uplevel.tracker.web.models.Lesson;
 import com.uplevel.tracker.data.respository.CourseRepository;
 
@@ -44,7 +46,7 @@ public class CourseService {
         course.setDifficulty(courseEntity.getDifficulty());
         course.setTotalHours(courseEntity.getTotalHours());
         course.setTags(List.of(courseEntity.getTags().split(",")));
-        course.setCreatedBy(courseEntity.getCreatedBy());
+        course.setCreatedBy(new User(courseEntity.getCreatedBy().getId(), courseEntity.getCreatedBy().getUsername()));
         course.setCreatedAt(courseEntity.getCreatedAt());
         course.setUpdatedAt(courseEntity.getUpdatedAt());
         course.setModules((List<Module>)courseEntity.getModules().stream().map(module -> {
@@ -64,6 +66,9 @@ public class CourseService {
     }
 
     private CourseEntity modelToEntity(Course course) {
+        UserEntity user = new UserEntity();
+        user.setId(course.getCreatedBy().getUserId());
+        user.setUsername(course.getCreatedBy().getUsername());
         CourseEntity courseEntity = new CourseEntity();
         courseEntity.setId(course.getCourseId());
         courseEntity.setTitle(course.getTitle());
@@ -71,7 +76,7 @@ public class CourseService {
         courseEntity.setDifficulty(course.getDifficulty());
         courseEntity.setTotalHours(course.getTotalHours());
         courseEntity.setTags(course.getTags().stream().collect(Collectors.joining(",")));
-        courseEntity.setCreatedBy(course.getCreatedBy());
+        courseEntity.setCreatedBy(user);
         return courseEntity;
     }
 }

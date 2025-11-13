@@ -22,7 +22,6 @@ public class NoteEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "note")
     private String note;
 
     @Column(name = "created_at")

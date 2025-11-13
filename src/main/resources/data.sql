@@ -1,13 +1,13 @@
 INSERT INTO users (username, password, enabled) values ('user', '{bcrypt}$2a$10$vw1gshpK4ipr97fWf1IBb.EhrqYcQxIQVpx.P3.3eVYUAAPRYSnAG', true);
 INSERT INTO users (username, password, enabled) values ('admin', '{bcrypt}$2a$10$vw1gshpK4ipr97fWf1IBb.EhrqYcQxIQVpx.P3.3eVYUAAPRYSnAG', true);
 
-INSERT INTO authorities (username, authority) values ('user', 'ROLE_USER');
-INSERT INTO authorities (username, authority) values ('admin', 'ROLE_USER');
-INSERT INTO authorities (username, authority) values ('admin', 'ROLE_ADMIN');
+INSERT INTO authorities (user_id, authority) values (1, 'ROLE_USER');
+INSERT INTO authorities (user_id, authority) values (2, 'ROLE_USER');
+INSERT INTO authorities (user_id, authority) values (2, 'ROLE_ADMIN');
 
-INSERT INTO courses (title, description, difficulty, total_hours, tags, created_by) values ('Course 1', 'Description 1', 'BEGINNER', 10, 'TAG1,TAG2', 'user');
-INSERT INTO courses (title, description, difficulty, total_hours, tags, created_by) values ('Course 2', 'Description 2', 'INTERMEDIATE', 20, 'TAG3,TAG4', 'user');
-INSERT INTO courses (title, description, difficulty, total_hours, tags, created_by) values ('Course 3', 'Description 3', 'ADVANCED', 30, 'TAG5,TAG6', 'admin');
+INSERT INTO courses (title, description, difficulty, total_hours, tags, created_by) values ('Course 1', 'Description 1', 'BEGINNER', 10, 'TAG1,TAG2', 1);
+INSERT INTO courses (title, description, difficulty, total_hours, tags, created_by) values ('Course 2', 'Description 2', 'INTERMEDIATE', 20, 'TAG3,TAG4', 1);
+INSERT INTO courses (title, description, difficulty, total_hours, tags, created_by) values ('Course 3', 'Description 3', 'ADVANCED', 30, 'TAG5,TAG6', 2);
 
 INSERT INTO modules (title, course_id, order_index) values ('Module 1', 1, 1);
 INSERT INTO modules (title, course_id, order_index) values ('Module 2', 1, 2);

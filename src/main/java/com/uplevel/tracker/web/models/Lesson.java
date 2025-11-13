@@ -23,5 +23,4 @@ public class Lesson {
     public Integer durationMinutes;
     public LocalDateTime createdAt;
     public LocalDateTime updatedAt;
-    public Module module;
 }

@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "lesson_progress")
 @Data
-public class Progress {
+public class ProgressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +27,10 @@ public class Progress {
 
     @ManyToOne
     @JoinColumn(name = "lesson_id", nullable = false)
-    private Lesson lesson;
+    private LessonEntity lesson;
 
     @ManyToOne
     @JoinColumn(name = "enrollment_id", nullable = false)
-    private Enrollment enrollment;
+    private EnrollmentEntity enrollment;
 
 }

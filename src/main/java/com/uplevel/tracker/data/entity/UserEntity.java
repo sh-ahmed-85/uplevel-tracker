@@ -35,4 +35,7 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<NoteEntity> notes;
+
+    @OneToMany(mappedBy = "user")
+    private List<ProgressEntity> progress;
 }

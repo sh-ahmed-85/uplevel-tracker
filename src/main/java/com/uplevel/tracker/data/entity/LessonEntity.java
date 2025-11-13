@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "lessons")
 @Data
-public class Lesson {
+public class LessonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +39,4 @@ public class Lesson {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @ManyToOne
-    @JoinColumn(name = "module_id")
-    private Module module;
 }

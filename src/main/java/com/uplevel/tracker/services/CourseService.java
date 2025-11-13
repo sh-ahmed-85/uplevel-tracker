@@ -54,11 +54,10 @@ public class CourseService {
             m.setLessons(module.getLessons().stream().map(lesson -> {
                 return new Lesson(
                     lesson.getId(),
-                    lesson.getTitle(), lesson.getUrl(), lesson.getOrderIndex(), lesson.getDurationMinutes(), lesson.getCreatedAt(), lesson.getUpdatedAt(), m);
+                    lesson.getTitle(), lesson.getUrl(), lesson.getOrderIndex(), lesson.getDurationMinutes(), lesson.getCreatedAt(), lesson.getUpdatedAt());
             }).collect(Collectors.toList()));
             m.setCreatedAt(module.getCreatedAt());
             m.setUpdatedAt(module.getUpdatedAt());
-            m.setCourse(course);
             return m;
         }).collect(Collectors.toList()));
         return course;

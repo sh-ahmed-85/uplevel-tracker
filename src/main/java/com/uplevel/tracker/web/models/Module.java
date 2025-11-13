@@ -18,7 +18,6 @@ import lombok.Setter;
 public class Module {
     public Long moduleId;
     public String title;
-    public Course course;
     public List<Lesson> lessons;
     public LocalDateTime createdAt;
     public LocalDateTime updatedAt;

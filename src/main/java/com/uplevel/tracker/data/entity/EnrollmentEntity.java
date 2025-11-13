@@ -46,4 +46,8 @@ public class EnrollmentEntity {
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private CourseEntity course;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 }

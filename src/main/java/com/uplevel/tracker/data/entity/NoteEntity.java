@@ -30,4 +30,12 @@ public class NoteEntity {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "lesson_id", nullable = false)
+    private LessonEntity lesson;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 }

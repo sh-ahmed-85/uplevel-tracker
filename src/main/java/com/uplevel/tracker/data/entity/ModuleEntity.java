@@ -36,6 +36,10 @@ public class ModuleEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private CourseEntity course;
+
     @OneToMany(mappedBy = "module")
     private List<LessonEntity> lessons;
 }

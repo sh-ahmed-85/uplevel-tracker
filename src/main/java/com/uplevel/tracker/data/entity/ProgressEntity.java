@@ -33,4 +33,8 @@ public class ProgressEntity {
     @JoinColumn(name = "enrollment_id", nullable = false)
     private EnrollmentEntity enrollment;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
+
 }
